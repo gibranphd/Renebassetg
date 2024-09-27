@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte des Contributions de René Basset</title>
+    <!-- Leaflet CSS for map visualization -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        /* Styling for the map container */
+        #map {
+            height: 600px;
+            width: 100%;
+            border: 2px solid rgba(0, 0, 255, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 255, 0.6);
+            background: radial-gradient(circle, rgba(18, 18, 18, 0.7), rgba(0, 0, 0, 0.5));
+        }
+
+        /* Legend for map */
+        .legend, .legend-left, .legend-circulations {
+            position: absolute;
+            background: rgba(0, 0, 50, 0.8);
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 255, 0.5);
+            font-size: 14px;
+            line-height: 1.5;
+            z-index: 999;
+        }
+
+        .legend {
+            bottom: 30px;
+            right: 10px;
+        }
+
+        .legend-left {
+            top: 100px;
+            left: 10px;
+        }
+
+        .legend-circulations {
+            bottom: 30px;
+            left: 10px;
+        }
+
+        .legend i, .legend-circulations i {
+            display: inline-block;
+            width: 20px;
+            height: 10px;
+            margin-right: 5px;
+        }
+
+        /* Colors for the legend (consistent with map) */
+        .blue { background: blue; }
+        .yellow { background: yellow; }
+        .green { background: green; }
+        .purple { background: purple; }
+        .orange { background: orange; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center; color: blue;">Carte des Contributions de René Basset</h1>
+    <p style="text-align:center;">Explorez les régions d'Afrique du Nord où René Basset a mené ses recherches sur les langues et cultures berbères.</p>
+
+    <!-- Map container -->
+    <div id="map"></div>
+
+    <!-- Legend for different contributions -->
+    <div class="legend">
+        <h4>Légende</h4>
+        <i class="blue"></i> Travail sur les dialectes berbères<br>
+        <i class="yellow"></i> Documentation des traditions culturelles<br>
+        <i class="green"></i> Études sur les croyances berbères<br>
+        <i class="purple"></i> Collaboration avec d'autres chercheurs<br>
+        <i class="orange"></i> Expéditions ethnographiques
+    </div>
+
+    <!-- Legend for detailed contributions -->
+    <div class="legend-left">
+        <h4>Détails des Circulations</h4>
+        <i class="blue"></i> Études linguistiques en Kabylie (Algérie)<br>
+        <i class="yellow"></i> Documentation des légendes en Afrique du Nord<br>
+        <i class="green"></i> Travaux sur les croyances des Beni-Snous (Algérie)<br>
+        <i class="purple"></i> Collaborations en linguistique berbère au Maroc<br>
+        <i class="orange"></i> Expéditions ethnographiques au Maroc
+    </div>
+
+    <!-- New Legend for Circulations -->
+    <div class="legend-circulations">
+        <h4>Circulations de René Basset</h4>
+        <i class="blue"></i> Kabylie (Études linguistiques)<br>
+        <i class="yellow"></i> Fès (Documentation des légendes)<br>
+        <i class="green"></i> Beni-Snous (Études des croyances)<br>
+        <i class="purple"></i> Rabat (Collaborations en linguistique)<br>
+        <i class="orange"></i> Marrakech (Expéditions ethnographiques)
+    </div>
+
+    <!-- Leaflet JS for the map -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map and set view to North Africa
+        var map = L.map('map').setView([31.7917, -7.0926], 5); // Morocco/North Africa region
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+        }).addTo(map);
+
+        // Define custom markers based on contribution type
+        function getColor(circulation) {
+            switch (circulation) {
+                case 'Études linguistiques': return 'blue'; 
+                case 'Documentation culturelle': return 'yellow';
+                case 'Études sur les croyances': return 'green'; 
+                case 'Collaboration': return 'purple'; 
+                case 'Expéditions ethnographiques': return 'orange'; 
+                default: return 'black';
+            }
+        }
+
+        // Function to create markers with popups
+        function createCustomMarker(lat, lng, circulation, description) {
+            return L.circleMarker([lat, lng], {
+                color: getColor(circulation),
+                radius: 12,
+                fillOpacity: 0.8
+            }).addTo(map).bindPopup(`<b>${circulation}</b><br>${description}`);
+        }
+
+        // Adding markers for key contributions by René Basset
+        createCustomMarker(36.4667, 6.2836, 'Études linguistiques', 'Kabylie, Algérie : Études linguistiques sur le dialecte kabyle.'); // Kabylie, Algeria
+        createCustomMarker(34.0331, -4.9998, 'Documentation culturelle', 'Fès, Maroc : Documentation des légendes et contes berbères.'); // Fes, Morocco
+        createCustomMarker(35.55, -5.83333, 'Études sur les croyances', 'Beni-Snous, Algérie : Études sur les croyances et traditions des Beni-Snous.'); // Beni-Snous, Algeria
+        createCustomMarker(33.9716, -6.8498, 'Collaboration', 'Rabat, Maroc : Collaboration avec chercheurs berbéristes.'); // Rabat, Morocco
+        createCustomMarker(32.75, -7.35, 'Expéditions ethnographiques', 'Marrakech, Maroc : Expéditions ethnographiques sur les tribus berbères.'); // Marrakech, Morocco
+    </script>
+</body>
+</html>
